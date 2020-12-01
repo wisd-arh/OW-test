@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width">
+		<title>TEST</title>
+
+		<link href="fotorama.css" rel="stylesheet">
+		<link href="style.css" rel="stylesheet">
+
+		<script src="js/jquery-2.1.3.min.js"></script>
+		<script src="js/fotorama.js"></script>
+		<script src="js/site_scripts.js"></script>
+
+		<script>
+			function toggleLike(sender) {
+			  $.post("./ow_enj.php", { action: "toggleLike", img: sender.dataset.img } )
+			  .done(function(data) {
+				  let label = "label[for=" + $(sender).attr('id') + "]";
+				  let dom_label = $(label).get(0);
+   	  			  dom_label.childNodes[2].nodeValue=' ' + data;  
+              });
+			};
+		</script>
+	</head>
+	<body><?php require('ow_enj.php'); ?> 
+		<div class="site_container">
+			<div class="aside">
+				<div class="bl_table">
+					<div>
+						<div class="aside__person_img" style="background-image: url(img/<?= $userData[6]; ?>);"></div>
+						<div class="aside__person_name"><?= $userData[1]; ?><span><?= $userData[2]; ?></span></div>
+						<div class="aside__person_data">
+							<ul>
+								<li>
+									<i class="i_icon-1"></i>
+									<p><?= $userData[3]; ?></p>
+								</li>
+								<li>
+									<i class="i_icon-2"></i>
+									<p><?= birthDateStr(); ?></p>
+									<span><?= birthDateSecondStr(); ?></span>
+								</li>
+							</ul>
+						</div>
+						<div class="aside__person_descr">
+							<p>
+							<?= $userData[5]; ?>
+							</p>
+						</div>
+					</div>
+				</div>
+				<div class="aside__background" style="background-image: url(img/<?= $userData[6]; ?>);"></div>
+			</div>
+			<div id="content" class="content">
+				<div class="bl_table">
+					<div>
+						<div class="content__slider">
+							<div id="slider">
+							<?= getSliderContent(); ?>
+							</div>
+							<div class="content__slider_pag">
+								<span class="i_icon-4"></span>
+								<span class="i_icon-5"></span>
+							</div>
+						</div>
+						<div class="content__text">
+							<?= getContentText(); ?>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+<?= dbClose(); ?></body>
+</html>
